@@ -18,6 +18,10 @@ contract Election {
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
 
+    event votedEvent (
+        uint indexed _candidateId
+    );
+
     function vote(uint _candidateId) public {
         // require that they haven't voted before
         require(!voters[msg.sender]);
@@ -30,6 +34,9 @@ contract Election {
 
         // update candidate vote Count
         candidates[_candidateId].voteCount++;
+
+        // trigger voted event
+        emit votedEvent(_candidateId);
     }
 
     // Constructor
